@@ -1,0 +1,12 @@
+PLACEHOLDER: Optional Hero Section Background Image
+
+File name: hero-section.jpg (or .png)
+Location: Can be used on index.html hero section
+Recommended size: 1920x600px or larger
+Format: JPEG or PNG
+Content: Optional background image for the hero section (currently uses gradient)
+
+This is optional - the hero section currently uses a gradient background.
+If you want to add a background image, update the CSS and uncomment this image.
+
+Once you add the actual image, you can delete this .txt file.

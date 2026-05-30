@@ -1,170 +1,89 @@
-// Fitness Coach Website - JavaScript
+// ========================================
+// Fitness With Will - Main JavaScript
+// ========================================
 
-// ============================================
-// Mobile Menu Toggle
-// ============================================
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        });
-
-        // Close menu when a link is clicked
-        const navItems = document.querySelectorAll('.nav-links a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                navLinks.style.display = 'none';
-            });
-        });
-    }
-
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const isClickInsideNav = event.target.closest('.navbar');
-        if (!isClickInsideNav && navLinks && navLinks.style.display === 'flex') {
-            navLinks.style.display = 'none';
-        }
-    });
-
-    // ============================================
-    // Active Navigation Link Highlighting
-    // ============================================
-    updateActiveNav();
-    window.addEventListener('load', updateActiveNav);
-
-    function updateActiveNav() {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const navLinks = document.querySelectorAll('.nav-links a');
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === currentPage || 
-                (currentPage === '' && link.getAttribute('href') === 'index.html')) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    // ============================================
-    // Intersection Observer for Scroll Animations
-    // ============================================
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe all service cards and testimonial cards
-    document.querySelectorAll('.service-card, .testimonial-card').forEach(el => {
-        el.style.opacity = '0';
-        observer.observe(el);
-    });
-
-    // ============================================
-    // Smooth Scroll Enhancement
-    // ============================================
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            if (href !== '#' && document.querySelector(href)) {
-                e.preventDefault();
-                const target = document.querySelector(href);
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // ============================================
-    // Form Handling (for contact.html)
-    // ============================================
-    const contactForm = document.getElementById('contactForm');
-    if (contactForm) {
-        contactForm.addEventListener('submit', handleFormSubmit);
-    }
-
-    function handleFormSubmit(e) {
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
         e.preventDefault();
-
-        // Get form values
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-
-        // Basic validation
-        if (!name || !email || !message) {
-            showMessage('Please fill in all fields', 'error');
-            return;
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
         }
-
-        // Email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showMessage('Please enter a valid email address', 'error');
-            return;
-        }
-
-        // Here you would typically send the form data to a backend
-        // For GitHub Pages (static only), you could use a service like:
-        // - Formspree.io
-        // - EmailJS
-        // - Basin
-        // Example with Formspree:
-        // fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json' },
-        //     body: JSON.stringify({ name, email, message })
-        // }).then(response => {
-        //     if (response.ok) {
-        //         showMessage('Message sent successfully!', 'success');
-        //         contactForm.reset();
-        //     } else {
-        //         showMessage('Error sending message. Please try again.', 'error');
-        //     }
-        // });
-
-        // For now, show success message (replace with actual backend)
-        showMessage('Thank you! I\'ll get back to you soon.', 'success');
-        contactForm.reset();
-    }
-
-    function showMessage(message, type) {
-        const messageDiv = document.getElementById('formMessage');
-        if (messageDiv) {
-            messageDiv.textContent = message;
-            messageDiv.className = 'form-message ' + type;
-            messageDiv.style.display = 'block';
-
-            setTimeout(() => {
-                messageDiv.style.display = 'none';
-            }, 5000);
-        }
-    }
+    });
 });
 
-// ============================================
-// Navbar Background on Scroll
-// ============================================
-window.addEventListener('scroll', function() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.borderBottomColor = 'rgba(51, 51, 51, 0.5)';
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.3)';
-    } else {
-        navbar.style.borderBottomColor = '#333333';
-        navbar.style.boxShadow = 'none';
-    }
+// Handle contact form submission
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form data
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const message = document.getElementById('message').value;
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showFormMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+
+        // Simple client-side validation
+        if (!name.trim() || !message.trim()) {
+            showFormMessage('Please fill in all required fields.', 'error');
+            return;
+        }
+
+        // Here you would typically send the form data to a server
+        // For now, we'll just show a success message
+        showFormMessage('Thank you for reaching out! Will will get back to you soon.', 'success');
+
+        // Reset form
+        contactForm.reset();
+
+        // Clear message after 5 seconds
+        setTimeout(() => {
+            document.getElementById('formMessage').style.display = 'none';
+        }, 5000);
+    });
+}
+
+function showFormMessage(message, type) {
+    const messageElement = document.getElementById('formMessage');
+    messageElement.textContent = message;
+    messageElement.className = `form-message ${type}`;
+    messageElement.style.display = 'block';
+}
+
+// Update active nav link on scroll
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('section[id]');
+    let current = '';
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (window.scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Add any initialization code here
+    console.log('Fitness With Will - Ready to help you transform!');
 });
