@@ -1,0 +1,9 @@
+PLACEHOLDER: Add Will's Professional Photo Here
+
+File name: will-about-photo.jpg (or .png)
+Location: Used on about.html page
+Recommended size: 500x500px or larger
+Format: JPEG or PNG
+Content: Professional photo of Will for the About page
+
+Once you add the actual image, you can delete this .txt file.

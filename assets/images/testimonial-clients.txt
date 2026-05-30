@@ -1,0 +1,16 @@
+PLACEHOLDER: Optional Client Testimonial Photos
+
+File names:
+  - testimonial-1.jpg (or .png) - Tristian T
+  - testimonial-2.jpg (or .png) - Ryan G
+  - testimonial-3.jpg (or .png) - Nick B
+
+Location: Can be used on index.html testimonials section
+Recommended size: 200x200px (square format)
+Format: JPEG or PNG
+Content: Photos of clients who provided testimonials
+
+These are optional - the testimonials currently display text only.
+If you want to add client photos, update the HTML and CSS accordingly.
+
+Once you add the actual images, you can delete this .txt file.
