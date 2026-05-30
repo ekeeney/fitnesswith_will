@@ -1,0 +1,38 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE & Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.atom/
+
+# Node (if using build tools later)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Local development
+.env
+.env.local
+localhost.conf
+
+# Logs
+*.log
+
+# Compiled files
+dist/
+build/
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+.env.*.local
